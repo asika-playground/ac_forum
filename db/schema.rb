@@ -11,23 +11,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408082721) do
+ActiveRecord::Schema.define(version: 20150408094220) do
+
+  create_table "categories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "comments", force: :cascade do |t|
     t.text     "content",    null: false
     t.integer  "topic_id",   null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id",    null: false
   end
 
   add_index "comments", ["topic_id"], name: "index_comments_on_topic_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
+  create_table "topic_cate_ships", force: :cascade do |t|
+    t.integer  "topic_id"
+    t.integer  "category_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "topic_cate_ships", ["category_id"], name: "index_topic_cate_ships_on_category_id"
+  add_index "topic_cate_ships", ["topic_id"], name: "index_topic_cate_ships_on_topic_id"
 
   create_table "topics", force: :cascade do |t|
     t.string   "topic",      null: false
     t.text     "content",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id",    null: false
   end
+
+  add_index "topics", ["user_id"], name: "index_topics_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
