@@ -1,5 +1,5 @@
 class TopicCateShip < ActiveRecord::Base
 
-    belongs_to :topics
-    belongs_to :categories
+    belongs_to :topic
+    belongs_to :category
 end
