@@ -26,6 +26,7 @@ class TopicsController < ApplicationController
   end
 
   def show
+    @topic.update(:views => @topic.views+1)
   end
 
   def edit
