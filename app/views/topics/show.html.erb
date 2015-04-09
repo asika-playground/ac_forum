@@ -20,15 +20,36 @@
 			<%= @topic.content %>
 		</td>
 	</tr>
-
-	<% if @topic.comments %>
-		<% @topic.comments.each do |comment| %>
-
-
-		<% end %>
-	<% end %>
 </table>
 
 <% if current_user %>
 	<%= link_to "Reply", new_topic_comment_path(@topic), :class => "btn btn-primary" %>
 <% end %>
+
+<table class="table table-bordered">
+
+	<% if @topic.comments %>
+		<% @topic.comments.each do |comment| %>
+
+			<tr>
+				<td>
+					<%= comment.user.username %> replied on <%= comment.created_at %>
+
+					<% if current_user == comment.user %>
+						<%= link_to "Delete", topic_comment_path(@topic, comment), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger btn-sm pull-right" %>
+
+						<%= link_to "Edit", edit_topic_comment_path(@topic, comment), :class => "btn btn-primary btn-sm pull-right" %>
+					<% end %>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<%= comment.content %>
+				</td>
+			</tr>
+
+
+		<% end %>
+	<% end %>
+
+</table>
