@@ -4,7 +4,11 @@ class TopicsController < ApplicationController
   before_action :get_topic, :only => [:show, :edit, :update, :destroy]
 
   def index
-    @topics = Topic.all
+    if params[:cate]
+      @topics = Topic.where(:category_id => params[:cate]).page(params[:page]).per(10)
+    else
+      @topics = Topic.page( params[:page] ).per(10)
+    end
   end
 
   def new
