@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408094220) do
+ActiveRecord::Schema.define(version: 20150409035543) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -41,14 +41,12 @@ ActiveRecord::Schema.define(version: 20150408094220) do
   add_index "topic_cate_ships", ["topic_id"], name: "index_topic_cate_ships_on_topic_id"
 
   create_table "topics", force: :cascade do |t|
-    t.string   "topic",      null: false
+    t.string   "title",      null: false
     t.text     "content",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "user_id",    null: false
+    t.integer  "user_id"
   end
-
-  add_index "topics", ["user_id"], name: "index_topics_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

@@ -1,1 +1,27 @@
 <h1>Topics</h1>
+
+<table class="table table-striped table-bordered">
+  <tr>
+    <td>Topic</td>
+    <td>Category</td>
+    <td>Author</td>
+    <td>Replies</td>
+    <td>Views</td>
+    <td>Activity</td>
+  </tr>
+
+  <% @topics.each do |t| %>
+    <tr>
+      <td><%= link_to t.title, topic_path(t) %></td>
+      <td><%= t.category_ids.to_s %></td>
+      <td><%= t.user.username %></td>
+      <td></td>
+      <td></td>
+      <td><%= t.created_at %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to new_topic_path, :class => "btn btn-primary" do %>
+  New Topic
+<% end %>

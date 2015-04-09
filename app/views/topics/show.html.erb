@@ -1,0 +1,34 @@
+<h1><%= @topic.title %></h1>
+
+<%= @topic.category_ids %>
+
+<hr>
+<table class="table table-bordered">
+	<tr>
+		<td>
+			<%= @topic.user.username %> posted on <%= @topic.created_at %>
+
+			<% if current_user == @topic.user %>
+				<%= link_to "Delete", topic_path(@topic), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger pull-right" %>
+
+				<%= link_to "Edit", edit_topic_path(@topic), :class => "btn btn-primary pull-right" %>
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<%= @topic.content %>
+		</td>
+	</tr>
+
+	<% if @topic.comments %>
+		<% @topic.comments.each do |comment| %>
+
+
+		<% end %>
+	<% end %>
+</table>
+
+<% if current_user %>
+	<%= link_to "Reply", new_topic_comment_path(@topic), :class => "btn btn-primary" %>
+<% end %>
