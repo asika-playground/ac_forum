@@ -41,7 +41,7 @@
           <% end %>
         <% end %>
       </td>
-      <td><%= t.user.username %></td>
+      <td><%= link_to t.user.username, user_path(t.user.id) %></td>
       <td><%= t.comments.size %></td>
       <td><%= t.views %></td>
       <td><%= t.updated_at %></td>
