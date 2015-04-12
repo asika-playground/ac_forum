@@ -1,6 +1,8 @@
 <h1><%= @topic.title %></h1>
 
-<%= @topic.category_ids %>
+<% @topic.categories.each do |c| %>
+	<span class="badge"><%= c.name %></span>
+<% end %>
 
 <hr>
 <table class="table table-bordered">
@@ -8,9 +10,10 @@
 		<td>
 			<%= @topic.user.username %> posted on <%= @topic.created_at %>
 
-			<% if current_user == @topic.user %>
+			<% if current_user == @topic.user || current_user.admin? %>
 				<%= link_to "Delete", topic_path(@topic), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger pull-right" %>
-
+			<% end %>
+			<% if current_user == @topic.user %>
 				<%= link_to "Edit", edit_topic_path(@topic), :class => "btn btn-primary pull-right" %>
 			<% end %>
 		</td>
@@ -35,9 +38,10 @@
 				<td>
 					<%= comment.user.username %> replied on <%= comment.created_at %>
 
-					<% if current_user == comment.user %>
+					<% if current_user == comment.user || current_user.admin? %>
 						<%= link_to "Delete", topic_comment_path(@topic, comment), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger btn-sm pull-right" %>
-
+					<% end %>
+					<% if current_user == comment.user %>
 						<%= link_to "Edit", edit_topic_comment_path(@topic, comment), :class => "btn btn-primary btn-sm pull-right" %>
 					<% end %>
 				</td>

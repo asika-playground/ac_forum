@@ -31,7 +31,7 @@ class TopicsController < ApplicationController
       @topics = @topics.order("topics.%{sort} %{order}" % {:sort => params[:sort], :order => order})
     end
 
-    @topics = @topics.page( params[:page] ).per(10)
+    @topics = @topics.page( params[:page] ).per(20)
   end
 
   def about
