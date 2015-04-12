@@ -43,7 +43,7 @@
     <tr>
       <td><%= p.username %></td>
       <td><%= p.role %></td>
-      <td><%= link_to "Edit", about_topics_path, :class => "btn btn-primary" %></td>
+      <td><%= link_to "Edit", edit_admin_user_path(p), :class => "btn btn-primary" %></td>
     </tr>
   <% end %>
 </table>

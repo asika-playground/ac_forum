@@ -22,6 +22,12 @@
     <%= f.text_area :bio %>
   </div>
 
+  <% if current_user.admin? %>
+    <div class="field">
+      <%= f.label :role %><br />
+      <%= f.select :role, ["admin", "user"] %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
