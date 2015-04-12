@@ -7,6 +7,10 @@ Rails.application.routes.draw do
 
   resources :topics do
     resources :comments, :controller => 'topic_comments', :only => [:new, :create, :edit, :update, :destroy]
+
+    collection do
+      get :about
+    end
   end
 
   root 'topics#index'

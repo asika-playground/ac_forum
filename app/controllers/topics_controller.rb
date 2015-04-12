@@ -34,6 +34,12 @@ class TopicsController < ApplicationController
     @topics = @topics.page( params[:page] ).per(10)
   end
 
+  def about
+    @user_count = User.all.size
+    @topic_count = Topic.all.size
+    @comment_count = Comment.all.size
+  end
+
   def new
     @topic = Topic.new
   end
