@@ -7,7 +7,8 @@ class TopicsController < ApplicationController
     @topics = Topic.all
 
     if params[:cate]
-      @topics = @topics.where(:category_id => params[:cate])
+      # @topics = @topics.where(:category_id => params[:cate])
+      @topics = Category.find(params[:cate]).topics
     end
 
     if params[:sort]

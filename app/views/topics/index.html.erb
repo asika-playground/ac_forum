@@ -10,14 +10,20 @@
     <td>Category</td>
     <td>Author</td>
     <td>Replies</td>
-    <td><%= link_to "Views", topics_path(:sort => "views", :order => "desc") %></td>
-    <td><%= link_to "Updated", topics_path(:sort => "updated_at", :order => "desc") %></td>
+    <td><%= link_to "Views", topics_path( merge_topic_filters(params, :sort => "views", :order => "desc") ) %></td>
+    <td><%= link_to "Updated", topics_path( merge_topic_filters(params, :sort => "updated_at", :order => "desc") ) %></td>
   </tr>
 
   <% @topics.each do |t| %>
     <tr>
       <td><%= link_to t.title, topic_path(t) %></td>
-      <td><%= t.category_ids.to_s %></td>
+      <td>
+        <% t.categories.each do |cat| %>
+          <%= link_to topics_path( merge_topic_filters(params, :cate => cat.id) ) do %>
+            <span class="badge"><%= cat.name %></span>
+          <% end %>
+        <% end %>
+      </td>
       <td><%= t.user.username %></td>
       <td><%= t.comments.size %></td>
       <td><%= t.views %></td>
