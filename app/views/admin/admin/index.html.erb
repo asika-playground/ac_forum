@@ -1,0 +1,49 @@
+<h1>Admin!</h1>
+
+<h2>Categories Management</h2>
+
+<%= form_for @new_category, :url => admin_categories_path(@new_category) do |f| %>
+
+  <% if @new_category.errors.any? %>
+    <ul>
+    <% @new_category.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  <% end %>
+
+  <div class="form-group form-inline">
+    <%= f.label :name, "Name" %>
+    <%= f.text_field :name, :class=> "form-control" %>
+    <%= f.submit "New Category", :class => "btn btn-primary" %>
+  </div>
+
+  <div class="form-group">
+  </div>
+
+<% end %>
+
+<table class="table table-bordered">
+  <% @categories.each do |c| %>
+    <tr>
+      <td><%= c.name %></td>
+      <td><%= c.topics.size %></td>
+      <td>
+        <% if c.topics.size == 0 %>
+          <%= link_to "Delete", admin_category_path(c), :method => "delete", :class => "btn btn-danger" %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<h2>User Management</h2>
+<table class="table table-bordered">
+  <% @users.each do |p| %>
+    <tr>
+      <td><%= p.username %></td>
+      <td><%= p.role %></td>
+      <td><%= link_to "Edit", about_topics_path, :class => "btn btn-primary" %></td>
+    </tr>
+  <% end %>
+</table>

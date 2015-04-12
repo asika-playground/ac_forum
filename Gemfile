@@ -48,6 +48,6 @@ group :development, :test do
   gem 'spring'
 
   gem 'awesome_print'
-  gem "better_errors"
+  # gem "better_errors"
 end
 

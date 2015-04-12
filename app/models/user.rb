@@ -4,7 +4,12 @@ class User < ActiveRecord::Base
     devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+    validates_presence_of :role
+
     has_many :topics
     has_many :comments
 
+    def admin?
+      self.role == "admin"
+    end
 end

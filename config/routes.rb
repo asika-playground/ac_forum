@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  # devise_for :users
   devise_for :users, controllers: { sessions: "users/sessions", registrations: 'users/registrations' }
 
   resources :users
@@ -11,6 +10,13 @@ Rails.application.routes.draw do
     collection do
       get :about
     end
+  end
+
+  namespace :admin do
+    root to: "admin#index"
+
+    resources :categories
+    resources :users
   end
 
   root 'topics#index'
