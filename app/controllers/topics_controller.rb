@@ -5,10 +5,20 @@ class TopicsController < ApplicationController
 
   def index
     @topics = Topic.all
+    @categories = Category.all
 
     if params[:cate]
-      # @topics = @topics.where(:category_id => params[:cate])
-      @topics = Category.find(params[:cate]).topics
+
+      if params[:cate].to_i == 0
+        # uncategoried
+        uncat = Topic.select {|r| r.categories.size == 0}
+
+        # remap array to ActiveRecord::Relation
+        # http://stackoverflow.com/questions/17331862/converting-an-array-of-objects-to-activerecordrelation
+        @topics = Topic.where(id: uncat.map(&:id))
+      else
+        @topics = Category.find(params[:cate]).topics
+      end
     end
 
     if params[:sort]
@@ -19,7 +29,6 @@ class TopicsController < ApplicationController
       end
 
       @topics = @topics.order("topics.%{sort} %{order}" % {:sort => params[:sort], :order => order})
-      # @topics = @topics.sort {|t| t.send params[:sort]}
     end
 
     @topics = @topics.page( params[:page] ).per(10)

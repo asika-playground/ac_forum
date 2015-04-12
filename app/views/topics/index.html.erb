@@ -3,6 +3,23 @@
 <%= link_to new_topic_path, :class => "btn btn-primary" do %>
   New Topic
 <% end %>
+  <%= link_to topics_path do %>
+      <span class="badge">All</span>
+  <% end %>
+
+  <% @categories.each do |cat| %>
+    <%= link_to topics_path( :cate => cat.id ) do %>
+      <span class="badge"><%= cat.name %></span>
+    <% end %>
+  <% end %>
+
+  <%= link_to topics_path( :cate => 0) do %>
+      <span class="badge">Uncategoried</span>
+  <% end %>
+
+<div>
+
+</div>
 
 <table class="table table-striped table-bordered">
   <tr>
@@ -19,7 +36,7 @@
       <td><%= link_to t.title, topic_path(t) %></td>
       <td>
         <% t.categories.each do |cat| %>
-          <%= link_to topics_path( merge_topic_filters(params, :cate => cat.id) ) do %>
+          <%= link_to topics_path( :cate => cat.id ) do %>
             <span class="badge"><%= cat.name %></span>
           <% end %>
         <% end %>
