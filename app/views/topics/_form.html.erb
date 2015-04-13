@@ -14,7 +14,11 @@
 <div class="form-group">
   <%= f.label :category_ids, "Category" %>
   <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) %>
+</div>
 
+<div class="form-group">
+  <%= f.label :category_ids, "Category" %>
+  <%= f.text_field :title, 'data-role'=>'tagsinput' %>
 </div>
 
 <div class="form-group">
