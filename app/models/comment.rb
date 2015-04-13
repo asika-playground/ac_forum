@@ -2,11 +2,13 @@ class Comment < ActiveRecord::Base
     belongs_to :user
     belongs_to :topic, :counter_cache => true, :touch => true
 
-    after_create :update_topic
+    validates_presence_of :content
 
-    protected
+    # after_create :update_topic
 
-    def update_topic
-      self.topic.update_attribute(:updated_at, self.updated_at)
-    end
+    # protected
+
+    # def update_topic
+    #   self.topic.update_attribute(:updated_at, self.updated_at)
+    # end
 end

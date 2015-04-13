@@ -7,12 +7,23 @@ class Topic < ActiveRecord::Base
 
     before_create :get_time_now
 
-    def last_update
-      if self.comment_ids.size > 0
-        self.comments.last.updated_at
-      else
-        self.updated_at
+    validates_presence_of :title, :content
+
+    # def last_update
+    #   if self.comment_ids.size > 0
+    #     self.comments.last.updated_at
+    #   else
+    #     self.updated_at
+    #   end
+    # end
+
+    def users_unique
+      users_uq = [self.user]
+      self.comments.each do |c|
+        users_uq << c.user
       end
+
+      return users_uq.uniq
     end
 
     protected
