@@ -1,4 +1,7 @@
 <h1>Topics</h1>
+<% if @category %>
+  <h3><%= @category %></h3>
+<% end %>
 
 <%= link_to new_topic_path, :class => "btn btn-primary" do %>
   New Topic
@@ -27,7 +30,6 @@
     <td>Topic</td>
     <td>Category</td>
     <td>Author</td>
-    <!-- <td>Replies</td> -->
     <td><%= link_to "Replies", topics_path( merge_topic_filters(params, :sort => "comments_count", :order => "desc") ) %></td>
     <td><%= link_to "Views", topics_path( merge_topic_filters(params, :sort => "views", :order => "desc") ) %></td>
     <td><%= link_to "Updated", topics_path( merge_topic_filters(params, :sort => "updated_at", :order => "desc") ) %></td>
