@@ -8,7 +8,7 @@
 <table class="table table-bordered">
 	<tr>
 		<td>
-			<%= @topic.user.username %> posted on <%= @topic.created_at %>
+			<%= link_to @topic.user.username, user_path(@topic.user) %> posted on <%= @topic.created_at %>
 
 			<% if current_user == @topic.user || current_user.admin? %>
 				<%= link_to "Delete", topic_path(@topic), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger pull-right" %>
@@ -36,7 +36,7 @@
 
 			<tr>
 				<td>
-					<%= comment.user.username %> replied on <%= comment.created_at %>
+					<%= link_to comment.user.username, user_path(comment.user) %> replied on <%= comment.created_at %>
 
 					<% if current_user == comment.user || current_user.admin? %>
 						<%= link_to "Delete", topic_comment_path(@topic, comment), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger btn-sm pull-right" %>
