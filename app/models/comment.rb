@@ -1,6 +1,6 @@
 class Comment < ActiveRecord::Base
     belongs_to :user
-    belongs_to :topic, :counter_cache => true
+    belongs_to :topic, :counter_cache => true, :touch => true
 
     after_create :update_topic
 

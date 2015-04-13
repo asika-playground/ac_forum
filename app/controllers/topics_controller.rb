@@ -13,12 +13,16 @@ class TopicsController < ApplicationController
         # uncategoried
         uncat = Topic.select {|r| r.categories.size == 0}
 
+        @category = "Uncategoried"
+
         # convert array to ActiveRecord::Relation
         # http://stackoverflow.com/questions/17331862/converting-an-array-of-objects-to-activerecordrelation
         @topics = Topic.where(id: uncat.map(&:id))
       else
+        @category = Category.find(params[:cate]).name
         @topics = Category.find(params[:cate]).topics
       end
+
     end
 
     if params[:sort]
