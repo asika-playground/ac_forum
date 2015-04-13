@@ -16,3 +16,14 @@
 //= require turbolinks
 //= require bootstrap-tagsinput
 //= require_tree .
+
+$(function () {
+	$(".cate_name").hide();
+
+	$(".edit_cat").click(function (event) {
+		event.preventDefault();
+
+		var cid = $(this).data("cid");
+		$(".cat"+cid).toggle();
+	});
+});

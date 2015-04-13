@@ -1,6 +1,7 @@
 class Admin::CategoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :check_admin
+  before_action :get_category, :only => [:update, :destroy]
 
   def create
     @category = Category.new(cate_params)
@@ -9,9 +10,17 @@ class Admin::CategoriesController < ApplicationController
     redirect_to admin_root_path
   end
 
-  def destroy
-    @category = Category.find(params[:id])
+  def update
+    if @category.update(cate_params)
+      flash[:notice] = "Category Renamed."
+    else
+      flash[:alert] = "Category Rename Failed."
+    end
 
+    redirect_to admin_root_path
+  end
+
+  def destroy
     if @category.topics.size == 0
       @category.destroy
     end
@@ -20,6 +29,10 @@ class Admin::CategoriesController < ApplicationController
   end
 
   protected
+
+  def get_category
+    @category = Category.find(params[:id])
+  end
 
   def cate_params
     params.require(:category).permit(:name)

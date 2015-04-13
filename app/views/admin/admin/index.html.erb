@@ -27,7 +27,18 @@
 <table class="table table-bordered">
   <% @categories.each do |c| %>
     <tr>
-      <td><%= c.name %></td>
+      <td>
+        <%= c.name %>
+        <%= form_for c, :url => admin_category_path(c), :html => {:class => "cate_name cat"+c.id.to_s} do |f| %>
+          <div class="form-group form-inline">
+            <%#= f.label :name, "Rename" %>
+            <%= f.text_field :name, :class=> "form-control" %>
+
+            <%= f.submit "Rename", :class => "btn btn-primary" %>
+          </div>
+        <% end %>
+        <a href="#" class="edit_cat" data-cid="<%= c.id %>">Edit</a>
+      </td>
       <td><%= c.topics.size %></td>
       <td>
         <% if c.topics.size == 0 %>

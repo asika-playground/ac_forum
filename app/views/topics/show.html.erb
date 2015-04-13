@@ -1,7 +1,4 @@
 <h1><%= @topic.title %></h1>
-<p>
-	<%= link_to @topic.user.username, user_path(@topic.user) %> posted on <%= @topic.created_at.to_s(:short) %>
-</p>
 
 <% @topic.categories.each do |c| %>
 	<span class="badge"><%= c.name %></span>
