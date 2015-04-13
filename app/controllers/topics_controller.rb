@@ -25,15 +25,16 @@ class TopicsController < ApplicationController
 
     end
 
-    if params[:sort]
+    sort = params[:sort] || "updated_at"
 
+    order = "DESC"
+    if params[:order] == "asc"
       order = "ASC"
-      if params[:order] == "desc"
-        order = "DESC"
-      end
 
-      @topics = @topics.order("topics.%{sort} %{order}" % {:sort => params[:sort], :order => order})
+      # @topics = @topics.order("topics.%{sort} %{order}" % {:sort => params[:sort], :order => order})
     end
+
+    @topics = @topics.order("topics.%{sort} %{order}" % {:sort => sort, :order => order})
 
     @topics = @topics.page( params[:page] ).per(20)
   end

@@ -1,18 +1,26 @@
 <h1><%= @user.username %></h1>
 <p><%= @user.bio %></p>
 
-<h2>Topics:</h2>
-<% @user.topics.each do |t| %>
-  <div class="profile">
-    <h3><%= link_to t.title, topic_path(t) %></h3>
-    <p><%= truncate(t.content, :length => 200) %></p>
+<div class="row">
+  <div class="col-md-6">
+    <h2>Topics</h2>
+    <% @user.topics.order("updated_at DESC").each do |t| %>
+      <div class="profile">
+        <h4><%= link_to t.title, topic_path(t) %></h4>
+        <p><%= truncate(t.content, :length => 200) %></p>
+      </div>
+    <% end %>
   </div>
-<% end %>
 
-<h2>Comments:</h2>
-<% @user.comments.each do |c| %>
-  <div class="profile">
-    <h3><%= link_to c.topic.title, topic_path(c.topic) %></h3>
-    <p><%= truncate(c.content, :length => 200) %></p>
+  <div class="col-md-6">
+    <h2>Comments</h2>
+    <% @user.comments.order("updated_at DESC").each do |c| %>
+      <div class="profile">
+        <h4><%= link_to c.topic.title, topic_path(c.topic) %></h4>
+        <p><%= truncate(c.content, :length => 200) %></p>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
+
+

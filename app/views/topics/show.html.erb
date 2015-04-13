@@ -1,20 +1,26 @@
 <h1><%= @topic.title %></h1>
+<p>
+	<%= link_to @topic.user.username, user_path(@topic.user) %> posted on <%= @topic.created_at.to_s(:short) %>
+</p>
 
 <% @topic.categories.each do |c| %>
 	<span class="badge"><%= c.name %></span>
 <% end %>
 
 <hr>
-<table class="table table-bordered">
+<table class="table table-striped">
 	<tr>
 		<td>
-			<%= link_to @topic.user.username, user_path(@topic.user) %> posted on <%= @topic.created_at %>
+			<%= link_to @topic.user.username, user_path(@topic.user) %> posted on <%= @topic.created_at.to_s(:short) %>
 
-			<% if current_user == @topic.user || current_user.admin? %>
-				<%= link_to "Delete", topic_path(@topic), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger pull-right" %>
+			<% if current_user %>
+				<%= link_to "Reply", new_topic_comment_path(@topic), :class => "btn btn-primary pull-right" %>
 			<% end %>
 			<% if current_user == @topic.user %>
-				<%= link_to "Edit", edit_topic_path(@topic), :class => "btn btn-primary pull-right" %>
+				<%= link_to "Edit", edit_topic_path(@topic), :class => "btn btn-default pull-right" %>
+			<% end %>
+			<% if current_user == @topic.user || current_user.admin? %>
+				<%= link_to "Delete", topic_path(@topic), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger pull-right" %>
 			<% end %>
 		</td>
 	</tr>
@@ -25,24 +31,21 @@
 	</tr>
 </table>
 
-<% if current_user %>
-	<%= link_to "Reply", new_topic_comment_path(@topic), :class => "btn btn-primary" %>
-<% end %>
+<% if @topic.comments %>
+	<h3>Comments</h3>
+	<table class="table table-striped">
 
-<table class="table table-bordered">
-
-	<% if @topic.comments %>
 		<% @topic.comments.each do |comment| %>
 
 			<tr>
 				<td>
-					<%= link_to comment.user.username, user_path(comment.user) %> replied on <%= comment.created_at %>
+					<%= link_to comment.user.username, user_path(comment.user) %> replied on <%= comment.created_at.to_s(:short) %>
 
+					<% if current_user == comment.user %>
+						<%= link_to "Edit", edit_topic_comment_path(@topic, comment), :class => "btn btn-default btn-sm pull-right" %>
+					<% end %>
 					<% if current_user == comment.user || current_user.admin? %>
 						<%= link_to "Delete", topic_comment_path(@topic, comment), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger btn-sm pull-right" %>
-					<% end %>
-					<% if current_user == comment.user %>
-						<%= link_to "Edit", edit_topic_comment_path(@topic, comment), :class => "btn btn-primary btn-sm pull-right" %>
 					<% end %>
 				</td>
 			</tr>
@@ -54,6 +57,6 @@
 
 
 		<% end %>
-	<% end %>
 
-</table>
+	</table>
+<% end %>
