@@ -9,13 +9,9 @@ class Topic < ActiveRecord::Base
 
     validates_presence_of :title, :content
 
-    # def last_update
-    #   if self.comment_ids.size > 0
-    #     self.comments.last.updated_at
-    #   else
-    #     self.updated_at
-    #   end
-    # end
+    def can_delete_by?(user)
+      (self.user == user) || (self.user.admin?)
+    end
 
     def users_unique
       users_uq = [self.user]

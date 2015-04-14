@@ -81,9 +81,14 @@ class TopicsController < ApplicationController
   end
 
   def destroy
-    @topic.destroy
+    if can_delete_by?(current_user)
+      @topic.destroy
 
-    flash[:alert] = "Done 刪除!!"
+      flash[:alert] = "Done Deleting!!"
+    else
+      flash[:alert] = "No Permission to Delete!!"
+    end
+
     redirect_to topics_path
   end
 

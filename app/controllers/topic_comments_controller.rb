@@ -38,9 +38,15 @@ class TopicCommentsController < ApplicationController
 
   def destroy
     @comment = @topic.comments.find(params[:id])
-    @comment.destroy
 
-    flash[:alert] = "Comment Deleted."
+    if @comment.can_delete_by(current_user)
+      @comment.destroy
+
+      flash[:alert] = "Comment Deleted."
+    else
+      flash[:alert] = "No Permission to Delete!!"
+    end
+
     redirect_to topic_path(@topic)
   end
 

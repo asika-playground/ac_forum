@@ -4,11 +4,7 @@ class Comment < ActiveRecord::Base
 
     validates_presence_of :content
 
-    # after_create :update_topic
-
-    # protected
-
-    # def update_topic
-    #   self.topic.update_attribute(:updated_at, self.updated_at)
-    # end
+    def can_delete_by?(user)
+      (self.user == user) || (self.user.admin?)
+    end
 end
