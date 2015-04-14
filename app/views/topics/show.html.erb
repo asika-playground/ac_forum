@@ -22,7 +22,9 @@
 				<%= link_to @topic.user.username, user_path(@topic.user) %> posted on <%= @topic.created_at.to_s(:short) %>
 
 				<% if current_user %>
-					<%= link_to "Reply", new_topic_comment_path(@topic), :class => "btn btn-primary pull-right" %>
+					<%= link_to new_topic_comment_path(@topic), :class => "btn btn-primary pull-right" do %>
+            <span class="glyphicon glyphicon-plus"></span> Reply
+          <% end %>
 
 					<% if current_user == @topic.user %>
 						<%= link_to "Edit", edit_topic_path(@topic), :class => "btn btn-default pull-right" %>
