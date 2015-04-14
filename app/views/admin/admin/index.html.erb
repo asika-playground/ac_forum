@@ -1,3 +1,16 @@
+<script>
+  $(function () {
+    $(".cate_name").hide();
+
+    $(".edit_cat").click(function (event) {
+      event.preventDefault();
+
+      var cid = $(this).data("cid");
+      $(".cat"+cid).toggle();
+    });
+  });
+</script>
+
 <h1>Admin Backstage!</h1>
 <hr>
 
@@ -29,14 +42,15 @@
     <tr>
       <td>
         <%= c.name %>
-        <%= form_for c, :url => admin_category_path(c), :html => {:class => "cate_name cat"+c.id.to_s} do |f| %>
-          <div class="form-group form-inline">
-            <%#= f.label :name, "Rename" %>
-            <%= f.text_field :name, :class=> "form-control" %>
+        <div class="cate_name cat<%= c.id %>">
+          <%= form_for c, :url => admin_category_path(c) do |f| %>
+            <div class="form-group form-inline">
+              <%= f.text_field :name, :class=> "form-control" %>
 
-            <%= f.submit "Rename", :class => "btn btn-primary" %>
-          </div>
-        <% end %>
+              <%= f.submit "Rename", :class => "btn btn-primary" %>
+            </div>
+          <% end %>
+        </div>
         <a href="#" class="edit_cat" data-cid="<%= c.id %>">Edit</a>
       </td>
       <td><%= c.topics.size %></td>
