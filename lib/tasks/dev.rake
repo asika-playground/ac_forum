@@ -2,6 +2,7 @@ namespace :dev do
 
   task :admin => :environment do
     User.create(:username => "admin", :role => "admin", :password => "12345678", :email => "admin@ac.co")
+    # User.create(:username => "asika", :role => "admin", :password => "12345678", :email => "asika@ac.co")
   end
 
   task :create_users => :environment do
@@ -9,6 +10,16 @@ namespace :dev do
       username = Faker::Name.last_name.downcase
 
       User.create(:username => username, :role => "user", :password => "12345678", :email => username+"@ac.co")
+    end
+  end
+
+  task :create_users_ac => :environment do
+    emails = ["ihower@gmail.com", "frozenfung@gmail.com", "vneverz@gmail.com", "tim.du@alphacamp.co"]
+
+    emails.each do |email|
+      username = Faker::Name.last_name.downcase
+
+      User.create(:username => username, :password => "12345678", :email => email)
     end
   end
 
@@ -39,7 +50,7 @@ namespace :dev do
   end
 
   task :fake_comments => :environment do
-    100.times do |i|
+    200.times do |i|
       user_id = User.offset(rand(User.all.count)).first.id
       topic_id = Topic.offset(rand(Topic.all.count)).first.id
 

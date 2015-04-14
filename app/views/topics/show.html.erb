@@ -5,55 +5,67 @@
 <% end %>
 
 <hr>
-<table class="table table-striped">
-	<tr>
-		<td>
-			<%= link_to @topic.user.username, user_path(@topic.user) %> posted on <%= @topic.created_at.to_s(:short) %>
+<ul class="media-list">
+  <li class="media">
+    <div class="media-left">
+      <a href="#">
+        <img class="media-object gravatar" src="http://www.gravatar.com/avatar/<%= @topic.user.md5hash %>" alt="<%= @topic.user.username %>">
+      </a>
+    </div>
+    <div class="media-body">
+    	<div class="topic_header">
+				<%= link_to @topic.user.username, user_path(@topic.user) %> posted on <%= @topic.created_at.to_s(:short) %>
 
-			<% if current_user %>
-				<%= link_to "Reply", new_topic_comment_path(@topic), :class => "btn btn-primary pull-right" %>
-			<% end %>
-			<% if current_user == @topic.user %>
-				<%= link_to "Edit", edit_topic_path(@topic), :class => "btn btn-default pull-right" %>
-			<% end %>
-			<% if current_user == @topic.user || current_user.admin? %>
-				<%= link_to "Delete", topic_path(@topic), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger pull-right" %>
-			<% end %>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<%= @topic.content %>
-		</td>
-	</tr>
-</table>
+				<% if current_user %>
+					<%= link_to "Reply", new_topic_comment_path(@topic), :class => "btn btn-primary pull-right" %>
+
+					<% if current_user == @topic.user %>
+						<%= link_to "Edit", edit_topic_path(@topic), :class => "btn btn-default pull-right" %>
+					<% end %>
+					<% if current_user.admin? %>
+						<%= link_to "Delete", topic_path(@topic), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger pull-right" %>
+					<% end %>
+
+				<% end %>
+    	</div>
+			<p><%= simple_format @topic.content %></p>
+    </div>
+  </li>
+</ul>
 
 <% if @topic.comments %>
 	<h3>Comments</h3>
-	<table class="table table-striped">
+	<ul class="media-list">
 
 		<% @topic.comments.each do |comment| %>
 
-			<tr>
-				<td>
-					<%= link_to comment.user.username, user_path(comment.user) %> replied on <%= comment.created_at.to_s(:short) %>
+		  <li class="media">
+		    <div class="media-left">
+		      <a href="#">
+		        <img class="media-object gravatar" src="http://www.gravatar.com/avatar/<%= comment.user.md5hash %>" alt="<%= comment.user.username %>">
+		      </a>
+		    </div>
+		    <div class="media-body">
+		    	<div class="comment_header">
+						<%= link_to comment.user.username, user_path(comment.user) %> replied on <%= comment.created_at.to_s(:short) %>
 
-					<% if current_user == comment.user %>
-						<%= link_to "Edit", edit_topic_comment_path(@topic, comment), :class => "btn btn-default btn-sm pull-right" %>
-					<% end %>
-					<% if current_user == comment.user || current_user.admin? %>
-						<%= link_to "Delete", topic_comment_path(@topic, comment), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger btn-sm pull-right" %>
-					<% end %>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<%= comment.content %>
-				</td>
-			</tr>
+						<% if current_user %>
+							<% if current_user == comment.user %>
+								<%= link_to "Edit", edit_topic_comment_path(@topic, comment), :class => "btn btn-default btn-xs pull-right" %>
 
+							<% end %>
+							<% if current_user.admin? %>
+								<%= link_to "Delete", topic_comment_path(@topic, comment), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger btn-xs pull-right" %>
+							<% end %>
 
-		<% end %>
+						<% end %>
 
-	</table>
+		    	</div>
+		      <p><%= simple_format comment.content %></p>
+		    </div>
+		  </li>
+	  <% end %>
+	</ul>
 <% end %>
+
+

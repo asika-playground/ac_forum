@@ -12,4 +12,8 @@ class User < ActiveRecord::Base
     def admin?
       self.role == "admin"
     end
+
+    def md5hash
+        Digest::MD5.hexdigest self.email
+    end
 end
