@@ -8,9 +8,10 @@
 <ul class="media-list">
   <li class="media">
     <div class="media-left">
-      <a href="#">
+      <%= link_to user_path(@topic.user) do %>
         <img class="media-object gravatar" src="http://www.gravatar.com/avatar/<%= @topic.user.md5hash %>" alt="<%= @topic.user.username %>">
-      </a>
+      <% end %>
+
     </div>
     <div class="media-body">
     	<div class="topic_header">
@@ -41,9 +42,9 @@
 
 		  <li class="media">
 		    <div class="media-left">
-		      <a href="#">
-		        <img class="media-object gravatar" src="http://www.gravatar.com/avatar/<%= comment.user.md5hash %>" alt="<%= comment.user.username %>">
-		      </a>
+          <%= link_to user_path(comment.user) do %>
+            <img class="media-object gravatar-sm" src="http://www.gravatar.com/avatar/<%= comment.user.md5hash %>" alt="<%= comment.user.username %>">
+          <% end %>
 		    </div>
 		    <div class="media-body">
 		    	<div class="comment_header">

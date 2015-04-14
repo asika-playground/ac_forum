@@ -1,5 +1,17 @@
-<h1><%= @user.username %></h1>
-<p><%= @user.bio %></p>
+<ul class="media-list">
+  <li class="media">
+    <div class="media-left">
+      <%= link_to user_path(@user) do %>
+        <img class="media-object gravatar" src="http://www.gravatar.com/avatar/<%= @user.md5hash %>" alt="<%= @user.username %>">
+      <% end %>
+
+    </div>
+    <div class="media-body">
+      <h1><%= @user.username %></h1>
+      <p><%= @user.bio %></p>
+    </div>
+  </li>
+</ul>
 
 <div class="row">
   <div class="col-md-6">
