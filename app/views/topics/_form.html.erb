@@ -12,11 +12,11 @@
 </div>
 
 <div class="form-group">
-  <%= f.label :category_ids, "Category" %>
+  <%= f.label :category_ids, "Category" %> <br />
   <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) %>
 </div>
 
 <div class="form-group">
   <%= f.label :content, "內容" %>
-  <%= f.text_area :content, :class=> "form-control" %>
+  <%= f.text_area :content, :rows => 10, :class=> "form-control" %>
 </div>
