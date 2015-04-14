@@ -9,30 +9,19 @@
   </div>
 </div>
 
-<% if @category %>
-  <div class="row">
-    <div class="col-md-12">
-      <h3>Category: <%= @category %></h3>
-    </div>
-  </div>
-<% end %>
-
 <div class="row">
-  <div class="col-md-12 categories">
-    <%= link_to topics_path do %>
-        <span class="badge">All</span>
-    <% end %>
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="<%= (params[:cate])? "": "active" %>"><%= link_to "All", topics_path %></li>
 
     <% @categories.each do |cat| %>
-      <%= link_to topics_path( :cate => cat.id ) do %>
-        <span class="badge"><%= cat.name %></span>
-      <% end %>
+
+      <li role="presentation" class="<%= (params[:cate] == cat.id.to_s)? "active": "" %>"><%= link_to cat.name, topics_path( :cate => cat.id ) %></li>
     <% end %>
 
-    <%= link_to topics_path( :cate => 0) do %>
-        <span class="badge">Uncategoried</span>
-    <% end %>
-  </div>
+    <li role="presentation" class="<%= (params[:cate] == "0")? "active": "" %>"><%= link_to "Uncategoried", topics_path( :cate => 0 ) %></li>
+
+  </ul>
+
 </div>
 
 <table class="table table-striped table-hover">
