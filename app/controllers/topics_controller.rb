@@ -7,12 +7,6 @@ class TopicsController < ApplicationController
     @topics = Topic.all
     @categories = Category.all
 
-    # @q = Person.ransack(params[:q])
-    # @people = @q.result.includes(:articles).page(params[:page])
-
-    # # or use `to_a.uniq` to remove duplicates (can also be done in the view):
-    # @people = @q.result.includes(:articles).page(params[:page]).to_a.uniq
-
     if params[:cate]
 
       if params[:cate] == "0"
@@ -28,7 +22,12 @@ class TopicsController < ApplicationController
 
     end
 
+    unless params[:q]
+
+    end
+
     @q = @topics.ransack(params[:q])
+    @q.sorts = 'updated_at DESC' if @q.sorts.empty?
     @topics = @q.result.page(params[:page])
   end
 

@@ -32,10 +32,6 @@
     <th>Topic</th>
     <th>Category</th>
     <th>Users</th>
-<!--     <th><%= link_to "Replies", topics_path( merge_topic_filters(params, :sort => "comments_count", :order => "desc") ) %></th>
-    <th><%= link_to "Views", topics_path( merge_topic_filters(params, :sort => "views", :order => "desc") ) %></th>
-    <th><%= link_to "Updated", topics_path( merge_topic_filters(params, :sort => "updated_at", :order => "desc") ) %></th>
- -->
     <th><%= sort_link @q, :comments_count, "Replies", :default_order => :desc %></th>
     <th><%= sort_link @q, :views, "Views", :default_order => :desc %></th>
     <th><%= sort_link @q, :updated_at, "Updated", :default_order => :desc %></th>
