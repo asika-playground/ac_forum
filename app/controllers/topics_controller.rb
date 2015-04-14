@@ -7,36 +7,29 @@ class TopicsController < ApplicationController
     @topics = Topic.all
     @categories = Category.all
 
+    # @q = Person.ransack(params[:q])
+    # @people = @q.result.includes(:articles).page(params[:page])
+
+    # # or use `to_a.uniq` to remove duplicates (can also be done in the view):
+    # @people = @q.result.includes(:articles).page(params[:page]).to_a.uniq
+
     if params[:cate]
 
-      if params[:cate].to_i == 0
+      if params[:cate] == "0"
         # uncategoried
         uncat = Topic.select {|r| r.categories.size == 0}
-
-        @category = "Uncategoried"
 
         # convert array to ActiveRecord::Relation
         # http://stackoverflow.com/questions/17331862/converting-an-array-of-objects-to-activerecordrelation
         @topics = Topic.where(id: uncat.map(&:id))
       else
-        @category = Category.find(params[:cate]).name
         @topics = Category.find(params[:cate]).topics
       end
 
     end
 
-    sort = params[:sort] || "updated_at"
-
-    order = "DESC"
-    if params[:order] == "asc"
-      order = "ASC"
-
-      # @topics = @topics.order("topics.%{sort} %{order}" % {:sort => params[:sort], :order => order})
-    end
-
-    @topics = @topics.order("topics.%{sort} %{order}" % {:sort => sort, :order => order})
-
-    @topics = @topics.page( params[:page] ).per(20)
+    @q = @topics.ransack(params[:q])
+    @topics = @q.result.page(params[:page])
   end
 
   def about

@@ -14,7 +14,6 @@
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require turbolinks
-//= require bootstrap-tagsinput
 //= require_tree .
 
 $(function () {
