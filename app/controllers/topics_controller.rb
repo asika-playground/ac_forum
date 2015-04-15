@@ -7,23 +7,16 @@ class TopicsController < ApplicationController
     @topics = Topic.all
     @categories = Category.all
 
-    if params[:cate]
+    if params[:cate] == "0"
+      # uncategoried
+      uncat = Topic.select {|r| r.categories.size == 0}
 
-      if params[:cate] == "0"
-        # uncategoried
-        uncat = Topic.select {|r| r.categories.size == 0}
+      # convert array to ActiveRecord::Relation
+      # http://stackoverflow.com/questions/17331862/converting-an-array-of-objects-to-activerecordrelation
+      @topics = Topic.where(id: uncat.map(&:id))
 
-        # convert array to ActiveRecord::Relation
-        # http://stackoverflow.com/questions/17331862/converting-an-array-of-objects-to-activerecordrelation
-        @topics = Topic.where(id: uncat.map(&:id))
-      else
-        @topics = Category.find(params[:cate]).topics
-      end
-
-    end
-
-    unless params[:q]
-
+    elsif params[:cate]
+      @topics = Category.find(params[:cate]).topics
     end
 
     @q = @topics.ransack(params[:q])
@@ -32,9 +25,9 @@ class TopicsController < ApplicationController
   end
 
   def about
-    @user_count = User.all.size
-    @topic_count = Topic.all.size
-    @comment_count = Comment.all.size
+    @user_count = User.count
+    @topic_count = Topic.count
+    @comment_count = Comment.count
   end
 
   def new
@@ -56,7 +49,7 @@ class TopicsController < ApplicationController
   end
 
   def show
-    @topic.update(:views => @topic.views+1)
+    @topic.update(:views => @topic.views+1) # extract a model method: @topic.increment_view!
   end
 
   def edit

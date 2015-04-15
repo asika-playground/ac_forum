@@ -9,17 +9,20 @@ class Topic < ActiveRecord::Base
 
     validates_presence_of :title, :content
 
+
+    def can_manage_by?(user)
+      user && ( (self.user == user) || (self.user.admin?) )
+    end
+
     def can_delete_by?(user)
       (self.user == user) || (self.user.admin?)
     end
 
-    def users_unique
-      users_uq = [self.user]
-      self.comments.each do |c|
-        users_uq << c.user
-      end
+    def users_unique # unique_users
+      users = self.comments.map{ |c| c.user }
+      users.unshift(self.user)
 
-      return users_uq.uniq
+      return users.uniq
     end
 
     protected

@@ -4,7 +4,12 @@ class Comment < ActiveRecord::Base
 
     validates_presence_of :content
 
+    def can_manage_by?(user)
+      user && ( (self.user == user) || (self.user.admin?) )
+    end
+
     def can_delete_by?(user)
       (self.user == user) || (self.user.admin?)
     end
+
 end

@@ -13,7 +13,7 @@
   <li class="media">
     <div class="media-left">
       <%= link_to user_path(@topic.user) do %>
-        <img class="media-object gravatar" src="http://www.gravatar.com/avatar/<%= @topic.user.md5hash %>" alt="<%= @topic.user.username %>">
+        <%= avatar_image(@topic.user) %>
       <% end %>
 
     </div>
@@ -25,15 +25,14 @@
 					<%= link_to new_topic_comment_path(@topic), :class => "btn btn-primary pull-right" do %>
             <span class="glyphicon glyphicon-plus"></span> Reply
           <% end %>
+        <% end %>
 
-					<% if current_user == @topic.user %>
-						<%= link_to "Edit", edit_topic_path(@topic), :class => "btn btn-default pull-right" %>
-					<% end %>
-					<% if current_user.admin? %>
-						<%= link_to "Delete", topic_path(@topic), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger pull-right" %>
-					<% end %>
+				<% if @topic.can_manage_by?(current_user) %>
+				  <%= link_to "Edit", edit_topic_path(@topic), :class => "btn btn-default pull-right" %>
 
+					<%= link_to "Delete", topic_path(@topic), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger pull-right" %>
 				<% end %>
+
     	</div>
 			<p><%= simple_format @topic.content %></p>
     </div>
@@ -49,21 +48,17 @@
 		  <li class="media">
 		    <div class="media-left">
           <%= link_to user_path(comment.user) do %>
-            <img class="media-object gravatar-sm" src="http://www.gravatar.com/avatar/<%= comment.user.md5hash %>" alt="<%= comment.user.username %>">
+            <%= avatar_image(comment.user) %>
           <% end %>
 		    </div>
 		    <div class="media-body">
 		    	<div class="comment_header">
 						<%= link_to comment.user.username, user_path(comment.user) %> replied on <%= comment.created_at.to_s(:short) %>
 
-						<% if current_user %>
-							<% if current_user == comment.user %>
-								<%= link_to "Edit", edit_topic_comment_path(@topic, comment), :class => "btn btn-default btn-xs pull-right" %>
+						<% if comment.can_manage_by?(current_user) %>
+							<%= link_to "Edit", edit_topic_comment_path(@topic, comment), :class => "btn btn-default btn-xs pull-right" %>
 
-							<% end %>
-							<% if current_user.admin? %>
-								<%= link_to "Delete", topic_comment_path(@topic, comment), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger btn-xs pull-right" %>
-							<% end %>
+							<%= link_to "Delete", topic_comment_path(@topic, comment), :method => :delete, :data => { :confirm => "Are you sure to delete?" }, :class => "btn btn-danger btn-xs pull-right" %>
 
 						<% end %>
 
